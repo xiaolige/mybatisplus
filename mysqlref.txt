@@ -1,0 +1,16 @@
+BEGIN
+	
+DECLARE sTemp VARCHAR(4000);
+DECLARE sTempChd VARCHAR(4000);
+SET sTemp = '$';
+SET sTempChd = cast(parentId as char);
+WHILE sTempChd is not NULL DO
+SELECT group_concat(id) INTO sTempChd FROM blog.refid where FIND_IN_SET(refid,sTempChd)>0;
+if(sTempChd is null) then 
+SET sTemp = sTemp;
+else 
+SET sTemp = CONCAT(sTemp,',',sTempChd);
+end if;
+END WHILE;
+return sTemp;
+END
